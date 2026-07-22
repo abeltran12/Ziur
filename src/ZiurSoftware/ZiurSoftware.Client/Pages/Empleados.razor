@@ -1,0 +1,52 @@
+@page "/empleados"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@inject IEmpleadoService EmpleadoService
+
+<div class="container">
+    <h1>Empleados</h1>
+
+    @if (empleados == null)
+    {
+        <p>Cargando empleados...</p>
+    }
+    else if (!empleados.Any())
+    {
+        <p>No hay empleados registrados.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Descripcion</th>
+                    <th>VActiva</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var empleado in empleados)
+                {
+                    <tr>
+                        <td>@empleado.Codigo</td>
+                        <td>@empleado.Descripcion</td>
+                        <td>
+                            <span style="display:inline-block; padding:0.2rem 0.6rem; border-radius:999px; color:white; background-color:@(empleado.VActiva ? "green" : "red");">
+                                @(empleado.VActiva ? "True" : "False")
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    private List<Empleado>? empleados;
+
+    protected override async Task OnInitializedAsync()
+    {
+        empleados = await EmpleadoService.GetAllAsync();
+    }
+}
