@@ -18,10 +18,10 @@ jobs:
         with:
           dotnet-version: '10.x'
       - name: Build with dotnet
-        working-directory: ./src/ZiurSoftware
-        run: dotnet build ZiurSoftware.slnx --configuration Release
+        working-directory: ./ZiurSoftware/src/ZiurSoftware
+        run: dotnet build ZiurSoftware.sln --configuration Release
       - name: dotnet publish
-        working-directory: ./src/ZiurSoftware
+        working-directory: ./ZiurSoftware/src/ZiurSoftware
         run: dotnet publish ZiurSoftware/ZiurSoftware.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
