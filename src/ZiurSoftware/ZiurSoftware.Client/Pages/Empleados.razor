@@ -1,5 +1,4 @@
 @page "/empleados"
-@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 @inject IEmpleadoService EmpleadoService
 
 <div class="container">
@@ -7,7 +6,7 @@
 
     @if (empleados == null)
     {
-        <p>Cargando empleados...</p>
+        <p>Cargando empleados..</p>
     }
     else if (!empleados.Any())
     {
