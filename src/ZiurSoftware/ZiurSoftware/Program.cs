@@ -1,3 +1,5 @@
+using ZiurSoftware.Client;
+using ZiurSoftware.Client.Services;
 using ZiurSoftware.Components;
 
 
@@ -14,6 +16,18 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddOutputCache();
 
+// Program.cs del proyecto ZiurSoftware (Server)
+builder.Services.AddScoped<AuthTokenHandler>();
+
+builder.Services.AddHttpClient("ZiurApi", client =>
+{
+    client.BaseAddress = new Uri("https://mainserver.ziursoftware.com/Ziur.API/basedatos_01/ZiurServiceRest.svc/api/");
+})
+.AddHttpMessageHandler<AuthTokenHandler>();
+
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ZiurApi"));
+
+builder.Services.AddScoped<IEmpleadoService, EmpleadoService>();
 
 var app = builder.Build();
 
